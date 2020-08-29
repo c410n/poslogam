@@ -1,3 +1,5 @@
+Iherited from the original repository of the script:
+
 # Скриптик для разбивки текста по слогам
 
 Сын учится читать, у него хорошо получается читать по слогам,
