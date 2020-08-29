@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #encoding:UTF-8
-import sys
+import sys, codecs
 """
 Сын учится читать, у него хорошо получается читать по слогам,
 но читать тексты с целыми словами получается пока плохо.
@@ -22,16 +22,21 @@ u'л', u'м', u'н', u'п', u'р', u'с', u'т', u'ф', u'х', u'ц', u'ч', u'�
 thud = [u'к', u'п', u'с', u'т', u'ф', u'х', u'ц', u'ч', u'ш', u'щ']
 vowels = [u'а', u'у', u'о', u'ы', u'и', u'э', u'я', u'ю', u'ё', u'е']
 
+TXTFILE = r".\IN.txt" # Path to the file for breaking text thereof into syllables
+OUTPUT = "" # Resulting file
+
 """
 usage:
     pbs.py [filename] - файлик с текстом для разбивки на слоги
     результат выводится в консоль
 """
 def main():
-    filename = sys.argv[1]
-    file = open(filename, 'r')
-    for line in file:
-        split2words(line.decode(encoding='UTF-8',errors='strict'))
+    global TXTFILE
+    filename = TXTFILE
+    T = str()
+    T = codecs.open(filename, "r", "utf-8").read() # No need for .decode(encoding='UTF-8',errors='strict') in Python 3
+    R = split2words(T).upper()
+    codecs.open(r".\OUT.txt", "w", "utf-8").write(R)
 
 """
 Перебирает строки
@@ -54,7 +59,7 @@ def split2words(line):
                 word = ''
             result += c
         i += 1
-    print(result.strip())
+    return result.strip()
 
 """
 Делит слово на слоги
@@ -113,6 +118,7 @@ def vowelcount(word):
     for c in word:
         if(isvowel(c)):
             cnt += 1
+    return cnt
 """
 Если согласный
 """
@@ -121,6 +127,7 @@ def isconsonant(char):
     for c in consonants:
         if c == x:
             return True
+    return False
 """
 Если глухой
 """
@@ -129,6 +136,7 @@ def isthud(char):
     for c in thud:
         if c == x:
             return True
+    return False
 """
 Если гласный
 """
